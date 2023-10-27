@@ -1,8 +1,7 @@
-import { Component, ReactElement, ReactNode } from 'react';
+import { Component, ReactNode } from 'react';
 
 interface ErrorBoundaryProps {
   children: ReactNode;
-  fallback?: ReactElement | ReactNode;
 }
 interface ErrorBoundaryState {
   error: boolean;
