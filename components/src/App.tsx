@@ -1,10 +1,11 @@
-import React from 'react';
 import './App.css';
+
+import MarvelPage from './components/marvelPage/MarvelPage';
 
 function App() {
   return (
     <>
-      <h1>Hello</h1>
+      <MarvelPage />
     </>
   );
 }
