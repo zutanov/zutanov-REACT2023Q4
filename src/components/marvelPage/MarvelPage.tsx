@@ -19,6 +19,7 @@ export interface IState {
   loading: boolean;
   results: Array<IHero>;
   searchTerm: string;
+  error: boolean;
 }
 
 class MarvelPage extends React.Component<object, IState> {
@@ -26,35 +27,34 @@ class MarvelPage extends React.Component<object, IState> {
     searchTerm: '',
     results: [],
     loading: true,
+    error: false,
   };
 
   fetchData = async <T,>(query = 'limit=20&offset=200'): Promise<T> => {
-    const baseURL = 'http://gateway.marvel.com/v1/public/characters?';
-    const request = await fetch(
-      `${baseURL}${query}&apikey=745c5a5a9b5aee2d133096deaf6e1260`
-    );
-    let response;
+    const baseURL = 'https://gateway.marvel.com/v1/public/characters?';
     try {
-      response = await request.json();
-      if (response.code !== 200 || !response.data.results.length) {
+      const request = await fetch(
+        `${baseURL}${query}&apikey=745c5a5a9b5aee2d133096deaf6e1260`
+      );
+      const response = await request.json();
+      if (response.status !== 'Ok' || !response.data.results.length) {
+        this.setState({ error: true });
         throw new Error(response.statusText);
       }
-      const { data } = response;
-      return data;
+      return response.data;
     } catch (error) {
       console.log(error);
+      throw error;
     }
-
-    return response;
   };
 
   handleSearch = async (query?: string) => {
-    const data = await this.fetchData<IPromise>(query);
+    const { results } = await this.fetchData<IPromise>(query);
     this.setState({
-      results: data.results,
+      results: results,
       loading: false,
     });
-    if (this.state.searchTerm && data.results[0].name) {
+    if (this.state.searchTerm && results[0].name) {
       localStorage.setItem('hero', JSON.stringify(this.state.searchTerm));
     }
   };
@@ -66,11 +66,12 @@ class MarvelPage extends React.Component<object, IState> {
   async componentDidMount(): Promise<void> {
     const hero = localStorage.getItem('hero');
     const parse = hero ? JSON.parse(hero) : null;
-    const query = `nameStartsWith=${parse}`;
-    if (query) {
-      this.handleSearch(query);
-    } else {
-      this.handleSearch();
+    const query = parse ? `nameStartsWith=${parse}` : undefined;
+    try {
+      await this.handleSearch(query);
+    } catch (error) {
+      this.setState({ error: true });
+      console.error(error);
     }
   }
 

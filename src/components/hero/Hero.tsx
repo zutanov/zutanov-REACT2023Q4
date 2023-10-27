@@ -4,13 +4,18 @@ import { IHero } from '../marvelPage/MarvelPage';
 
 interface IResult {
   results: IHero[];
+  error: boolean;
 }
 
 class Hero extends React.Component<IResult> {
   render() {
+    const { results, error } = this.props;
+    if (!results || error) {
+      throw new Error('Data is not found');
+    }
     return (
       <>
-        {this.props.results.map(({ id, name, thumbnail }) => {
+        {results.map(({ id, name, thumbnail }) => {
           return (
             <div className="hero" key={id}>
               <div className="hero__wrapper">

@@ -9,10 +9,10 @@ interface Props {
 
 class Heroes extends React.Component<Props> {
   render() {
-    const { results, loading } = this.props.state;
+    const { results, loading, error } = this.props.state;
     return (
       <div className="heroes">
-        {loading ? <p>Loading...</p> : <Hero results={results} />}
+        {loading ? <p>Loading...</p> : <Hero results={results} error={error} />}
       </div>
     );
   }
