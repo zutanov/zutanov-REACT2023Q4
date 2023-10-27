@@ -1,7 +1,8 @@
-import { Component, ErrorInfo, ReactNode } from 'react';
+import { Component, ReactElement, ReactNode } from 'react';
 
 interface ErrorBoundaryProps {
   children: ReactNode;
+  fallback?: ReactElement | ReactNode;
 }
 interface ErrorBoundaryState {
   error: boolean;
@@ -15,8 +16,8 @@ class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
     };
   }
 
-  componentDidCatch(error: Error, errorInfo: ErrorInfo) {
-    console.log(error, errorInfo);
+  componentDidCatch(error: Error) {
+    console.log(error);
     this.setState({
       error: true,
     });

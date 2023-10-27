@@ -10,17 +10,14 @@ class Hero extends React.Component<IResult> {
   render() {
     return (
       <>
-        {this.props.results.map((el) => {
+        {this.props.results.map(({ id, name, thumbnail }) => {
           return (
-            <div className="hero" key={el.id}>
+            <div className="hero" key={id}>
               <div className="hero__wrapper">
-                <img
-                  src={el.thumbnail.path + '/portrait_xlarge.jpg'}
-                  alt={el.name}
-                />
+                <img src={thumbnail.path + '/portrait_xlarge.jpg'} alt={name} />
               </div>
               <div className="hero__wrapper">
-                <h4 className="hero__title">{el.name}</h4>
+                <h4 className="hero__title">{name}</h4>
               </div>
             </div>
           );

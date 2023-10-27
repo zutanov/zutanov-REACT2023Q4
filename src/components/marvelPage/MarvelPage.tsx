@@ -54,10 +54,13 @@ class MarvelPage extends React.Component<object, IState> {
       results: data.results,
       loading: false,
     });
-    console.log(this.state);
     if (this.state.searchTerm && data.results[0].name) {
       localStorage.setItem('hero', JSON.stringify(this.state.searchTerm));
     }
+  };
+
+  handleInputChange = (e: ChangeEvent<HTMLInputElement>): void => {
+    this.setState({ searchTerm: e.target.value });
   };
 
   async componentDidMount(): Promise<void> {
@@ -70,10 +73,6 @@ class MarvelPage extends React.Component<object, IState> {
       this.handleSearch();
     }
   }
-
-  handleInputChange = (e: ChangeEvent<HTMLInputElement>): void => {
-    this.setState({ searchTerm: e.target.value });
-  };
 
   render(): React.ReactNode {
     return (
