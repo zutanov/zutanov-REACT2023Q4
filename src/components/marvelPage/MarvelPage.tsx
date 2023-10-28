@@ -1,4 +1,4 @@
-import React, { ChangeEvent } from 'react';
+import React, { ChangeEvent, useEffect, useState } from 'react';
 import Search from '../search/Search';
 import Heroes from '../heroes/Heroes';
 import ErrorBoundary from '../errorBoundary/ErrorBoundary';
@@ -17,20 +17,18 @@ export interface IHero {
 
 export interface IState {
   loading: boolean;
-  results: Array<IHero>;
+  results: IHero[];
   searchTerm: string;
   error: boolean;
 }
 
-class MarvelPage extends React.Component<object, IState> {
-  state = {
-    searchTerm: '',
-    results: [],
-    loading: true,
-    error: false,
-  };
+const MarvelPage: React.FC = () => {
+  const [searchTerm, setSearchTerm] = useState<string>('');
+  const [result, setResult] = useState<IHero[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<boolean>(false);
 
-  fetchData = async <T,>(query = 'limit=20&offset=200'): Promise<T> => {
+  const fetchData = async <T,>(query = 'limit=20&offset=200'): Promise<T> => {
     const baseURL = 'https://gateway.marvel.com/v1/public/characters?';
     try {
       const request = await fetch(
@@ -38,7 +36,7 @@ class MarvelPage extends React.Component<object, IState> {
       );
       const response = await request.json();
       if (response.status !== 'Ok' || !response.data.results.length) {
-        this.setState({ error: true });
+        setError(true);
         throw new Error(response.statusText);
       }
       return response.data;
@@ -48,46 +46,43 @@ class MarvelPage extends React.Component<object, IState> {
     }
   };
 
-  handleSearch = async (query?: string) => {
-    const { results } = await this.fetchData<IPromise>(query);
-    this.setState({
-      results: results,
-      loading: false,
-    });
-    if (this.state.searchTerm && results[0].name) {
-      localStorage.setItem('hero', JSON.stringify(this.state.searchTerm));
+  const handleSearch = async (query?: string) => {
+    const { results } = await fetchData<IPromise>(query);
+    setResult(results);
+    setLoading(false);
+    if (searchTerm && results[0].name) {
+      localStorage.setItem('hero', JSON.stringify(searchTerm));
     }
   };
 
-  handleInputChange = (e: ChangeEvent<HTMLInputElement>): void => {
-    this.setState({ searchTerm: e.target.value });
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement>): void => {
+    setSearchTerm(e.target.value);
   };
 
-  async componentDidMount(): Promise<void> {
+  useEffect(() => {
     const hero = localStorage.getItem('hero');
     const parse = hero ? JSON.parse(hero) : null;
     const query = parse ? `nameStartsWith=${parse}` : undefined;
     try {
-      await this.handleSearch(query);
+      handleSearch(query);
     } catch (error) {
-      this.setState({ error: true });
+      setError(true);
       console.error(error);
     }
-  }
+  }, []);
 
-  render(): React.ReactNode {
-    return (
-      <>
-        <Search
-          search={this.state.searchTerm}
-          handleSearch={this.handleSearch}
-          handleInputChange={this.handleInputChange}
-        />
-        <ErrorBoundary>
-          <Heroes state={this.state} />
-        </ErrorBoundary>
-      </>
-    );
-  }
-}
+  return (
+    <>
+      <Search
+        search={searchTerm}
+        handleSearch={handleSearch}
+        handleInputChange={handleInputChange}
+      />
+      <ErrorBoundary>
+        <Heroes error={error} results={result} loading={loading} />
+      </ErrorBoundary>
+    </>
+  );
+};
+
 export default MarvelPage;
