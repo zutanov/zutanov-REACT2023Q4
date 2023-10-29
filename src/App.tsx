@@ -1,10 +1,16 @@
+import { Route, Routes } from 'react-router-dom';
 import './App.css';
-import MarvelPage from './components/marvelPage/MarvelPage';
+import AllComics from './components/allComics/ComicsPage';
+import Outlet from './components/outlet/Outlet';
 
 function App() {
   return (
     <>
-      <MarvelPage />
+      <Routes>
+        <Route path="/" element={<Outlet />}>
+          <Route path="comics/:id" element={<AllComics />} />
+        </Route>
+      </Routes>
     </>
   );
 }
