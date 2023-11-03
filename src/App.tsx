@@ -1,6 +1,6 @@
 import { Route, Routes } from 'react-router-dom';
 import './App.css';
-import AllComics from './components/allComics/ComicsPage';
+import AllComics from './components/comicsPage/ComicsPage';
 import Outlet from './components/outlet/Outlet';
 
 function App() {

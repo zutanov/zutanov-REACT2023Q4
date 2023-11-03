@@ -10,7 +10,6 @@ interface IResult {
 
 const Hero: React.FC<IResult> = (props) => {
   const { results, error } = props;
-  console.log(results);
   if (!results || error) {
     throw new Error('Data is not found');
   }

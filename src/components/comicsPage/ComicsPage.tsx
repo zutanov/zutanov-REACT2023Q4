@@ -1,4 +1,4 @@
-import './allComics.scss';
+import './comicsPage.scss';
 import React, { useEffect, useState } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import Comics from '../comics/Comics';
