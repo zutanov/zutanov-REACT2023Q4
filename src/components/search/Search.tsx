@@ -1,21 +1,24 @@
-import React, { ChangeEvent } from 'react';
+import React, { ChangeEvent, SetStateAction } from 'react';
 import './search.scss';
 
 interface SearchProps {
   handleInputChange: (e: ChangeEvent<HTMLInputElement>) => void;
   handleSearch: (s?: string) => void;
   search: string;
+  setPage: React.Dispatch<SetStateAction<number>>;
 }
 
 const Search: React.FC<SearchProps> = ({
   handleInputChange,
   handleSearch,
   search,
+  setPage,
 }) => {
   const handleBtn = () => {
     if (search) {
       const searchQuery = `nameStartsWith=${search.trimEnd().toLowerCase()}`;
       handleSearch(searchQuery);
+      setPage(0);
     } else {
       handleSearch();
     }

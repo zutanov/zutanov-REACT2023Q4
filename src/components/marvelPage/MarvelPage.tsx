@@ -53,11 +53,8 @@ const MarvelPage: React.FC = () => {
       const { data } = response;
       setResult(data);
       setLoading(false);
-      console.log(data);
       if (data.total > 100) {
-        setPageQty(100 / limit);
-      } else if (data.total > limit) {
-        setPageQty(data.total / limit);
+        setPageQty(Math.ceil(100 / limit));
       }
       return response;
     } catch (error) {
@@ -82,12 +79,13 @@ const MarvelPage: React.FC = () => {
     const parse = hero ? JSON.parse(hero) : null;
     const query = parse ? `nameStartsWith=${parse}` : undefined;
     try {
-      handleSearch(query, limit);
+      handleSearch(query);
+      if (query) setPageQty(0);
     } catch (error) {
       setError(true);
       console.error(error);
     }
-  }, [limit]);
+  }, []);
 
   return (
     <>
@@ -95,6 +93,7 @@ const MarvelPage: React.FC = () => {
         search={searchTerm}
         handleSearch={handleSearch}
         handleInputChange={handleInputChange}
+        setPage={setPageQty}
       />
       <ErrorBoundary>
         <Heroes error={error} results={result.results} loading={loading} />
@@ -105,6 +104,7 @@ const MarvelPage: React.FC = () => {
           handleSearch={handleSearch}
           limit={limit}
           setLimit={setLimit}
+          setError={setError}
         />
       )}
     </>

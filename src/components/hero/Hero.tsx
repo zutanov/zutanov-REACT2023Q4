@@ -23,7 +23,7 @@ const Hero: React.FC<IResult> = (props) => {
             </div>
             <div className="hero__wrapper">
               <h4 className="hero__title">{name}</h4>
-              <Link to={`/comics/:${id}`}>Show comics</Link>
+              <Link to={`comics/:${id}`}>Show comics</Link>
             </div>
           </div>
         );

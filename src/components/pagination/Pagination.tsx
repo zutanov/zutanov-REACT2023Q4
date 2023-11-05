@@ -1,12 +1,13 @@
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import './pagination.scss';
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 
 interface PaginationProps {
   pages: number;
   handleSearch: (page?: string, limit?: number) => Promise<void>;
   limit: number;
   setLimit: React.Dispatch<React.SetStateAction<number>>;
+  setError: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const Pagination = ({
@@ -14,10 +15,18 @@ const Pagination = ({
   handleSearch,
   limit,
   setLimit,
+  setError,
 }: PaginationProps) => {
   const page = useRef(0);
   const history = useNavigate();
   const location = useLocation();
+
+  const changeLocation = () => {
+    const searchParams = new URLSearchParams(location.search);
+    searchParams.set('offset', String(page.current / limit + 1));
+    history(`?${searchParams.toString()}`);
+  };
+
   const handleChange = async (direction: string) => {
     if (direction === 'prev') {
       page.current -= limit;
@@ -25,18 +34,32 @@ const Pagination = ({
       page.current += limit;
     }
     await handleSearch(`offset=${page.current}`, limit);
-    const searchParams = new URLSearchParams(location.search);
-    searchParams.set('offset', String(page.current / limit + 1));
-    history(`?${searchParams.toString()}`);
+    changeLocation();
   };
 
   const handleClick = async (idx: number) => {
     page.current = idx * limit;
     await handleSearch(`offset=${page.current}`, limit);
-    const searchParams = new URLSearchParams(location.search);
-    searchParams.set('offset', String(page.current / limit + 1));
-    history(`?${searchParams.toString()}`);
+    changeLocation();
   };
+
+  const disabledBtn = () => {
+    if (limit === 5 && page.current > 90) return true;
+    if (limit === 10 && page.current > 80) return true;
+    if (limit === 15 && page.current > 100 - limit) return true;
+    if (limit === 20 && page.current > 100 - limit * 2) return true;
+    return false;
+  };
+
+  useEffect(() => {
+    try {
+      page.current = 0;
+      handleSearch('offset=0', limit);
+    } catch (error) {
+      setError(true);
+      console.error(error);
+    }
+  }, [limit]);
 
   return (
     <div className="pagination">
@@ -58,7 +81,7 @@ const Pagination = ({
                   : 'pagination__page'
               }`}
               key={idx + 1}
-              onClick={() => handleClick(idx - 1)}
+              onClick={() => handleClick(idx)}
             >
               {idx + 1}
             </Link>
@@ -66,21 +89,22 @@ const Pagination = ({
         </div>
         <button
           className="pagination__btn"
-          disabled={page.current > 100 - limit * 2 ? true : false}
+          disabled={disabledBtn()}
           onClick={() => handleChange('next')}
         >
           Next
         </button>
       </div>
-      <input
-        className="pagination__limit"
-        type="number"
-        max={20}
-        min={5}
-        step={5}
+      <select
         value={limit}
+        className="pagination__limit"
         onChange={(e) => setLimit(+e.target.value)}
-      />
+      >
+        <option value="5">5</option>
+        <option value="10">10</option>
+        <option value="15">15</option>
+        <option value="20">20</option>
+      </select>
     </div>
   );
 };
