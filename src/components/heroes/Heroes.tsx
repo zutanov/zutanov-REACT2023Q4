@@ -1,18 +1,11 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import './heroes.scss';
 import Hero from '../hero/Hero';
-import { IState } from '../marvelPage/MarvelPage';
+import Context from '../provider/MarvelProvider';
 
-const Heroes: React.FC<Omit<IState, 'searchTerm'>> = ({
-  results,
-  loading,
-  error,
-}) => {
-  return (
-    <div className="heroes">
-      {loading ? <p>Loading...</p> : <Hero results={results} error={error} />}
-    </div>
-  );
+const Heroes: React.FC = () => {
+  const { loading } = useContext(Context);
+  return <div className="heroes">{loading ? <p>Loading...</p> : <Hero />}</div>;
 };
 
 export default Heroes;

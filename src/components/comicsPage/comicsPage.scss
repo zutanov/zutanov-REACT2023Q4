@@ -17,6 +17,11 @@
     background: cadetblue;
     transition: 0.8s;
   }
+  &__header {
+    align-items: center;
+    justify-content: space-around;
+    display: flex;
+  }
   &__wrapper {
     padding: 10px 0;
     display: grid;
@@ -33,7 +38,6 @@
     border-radius: 10px;
     background: white;
     border: 1px solid white;
-    display: inline-block;
     font-size: 20px;
     width: 80px;
   }

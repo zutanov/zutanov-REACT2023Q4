@@ -63,7 +63,12 @@ const ComicsPage = () => {
           right: id ? '0%' : '-33%',
         }}
       >
-        <h1>List of Comics</h1>
+        <div className="allcomics__header">
+          <h1>List of Comics</h1>
+          <Link to="/" className="allcomics__btn">
+            Back
+          </Link>
+        </div>
         {loading ? (
           <h2 className="allcomics__empty">Loading...</h2>
         ) : !comics.length ? (
@@ -73,9 +78,6 @@ const ComicsPage = () => {
             <Comics comics={comics} />
           </div>
         )}
-        <Link to="/" className="allcomics__btn">
-          Back
-        </Link>
       </div>
     </div>
   );

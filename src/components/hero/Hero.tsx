@@ -1,21 +1,16 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import './hero.scss';
-import { IHero } from '../marvelPage/MarvelPage';
 import { Link } from 'react-router-dom';
+import Context from '../provider/MarvelProvider';
 
-interface IResult {
-  results: IHero[];
-  error: boolean;
-}
-
-const Hero: React.FC<IResult> = (props) => {
-  const { results, error } = props;
-  if (!results || error) {
+const Hero: React.FC = () => {
+  const { result, error } = useContext(Context);
+  if (!result || error) {
     throw new Error('Data is not found');
   }
   return (
     <>
-      {results.map(({ id, name, thumbnail }) => {
+      {result.map(({ id, name, thumbnail }) => {
         return (
           <div className="hero" key={id}>
             <div className="hero__wrapper">

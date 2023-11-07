@@ -1,22 +1,11 @@
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import './pagination.scss';
-import React, { useEffect, useRef } from 'react';
+import React, { useContext, useRef } from 'react';
+import Context from '../provider/MarvelProvider';
 
-interface PaginationProps {
-  pages: number;
-  handleSearch: (page?: string, limit?: number) => Promise<void>;
-  limit: number;
-  setLimit: React.Dispatch<React.SetStateAction<number>>;
-  setError: React.Dispatch<React.SetStateAction<boolean>>;
-}
+const Pagination: React.FC = () => {
+  const { pageQty, limit, handleSearch, setHeroesLimit } = useContext(Context);
 
-const Pagination = ({
-  pages,
-  handleSearch,
-  limit,
-  setLimit,
-  setError,
-}: PaginationProps) => {
   const page = useRef(0);
   const history = useNavigate();
   const location = useLocation();
@@ -27,20 +16,26 @@ const Pagination = ({
     history(`?${searchParams.toString()}`);
   };
 
-  const handleChange = async (direction: string) => {
+  const handleChange = (direction: string) => {
     if (direction === 'prev') {
       page.current -= limit;
     } else {
       page.current += limit;
     }
-    await handleSearch(`offset=${page.current}`, limit);
+    handleSearch(`offset=${page.current}`, limit);
     changeLocation();
   };
 
-  const handleClick = async (idx: number) => {
+  const handleClick = (idx: number) => {
     page.current = idx * limit;
-    await handleSearch(`offset=${page.current}`, limit);
+    handleSearch(`offset=${page.current}`, limit);
     changeLocation();
+  };
+
+  const setLimit = async (n: number) => {
+    page.current = 0;
+    setHeroesLimit(n);
+    await handleSearch('offset=0', n);
   };
 
   const disabledBtn = () => {
@@ -51,15 +46,7 @@ const Pagination = ({
     return false;
   };
 
-  useEffect(() => {
-    try {
-      page.current = 0;
-      handleSearch('offset=0', limit);
-    } catch (error) {
-      setError(true);
-      console.error(error);
-    }
-  }, [limit]);
+  if (pageQty === 0) return null;
 
   return (
     <div className="pagination">
@@ -72,7 +59,7 @@ const Pagination = ({
           Prev
         </button>
         <div className="pagination__pages">
-          {Array.from({ length: pages }, (_, idx) => (
+          {Array.from({ length: pageQty }, (_, idx) => (
             <Link
               to={'/'}
               className={`${

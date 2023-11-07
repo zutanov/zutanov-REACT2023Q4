@@ -1,26 +1,27 @@
-import React, { ChangeEvent, SetStateAction } from 'react';
+import React, { useContext } from 'react';
 import './search.scss';
+import Context from '../provider/MarvelProvider';
 
-interface SearchProps {
-  handleInputChange: (e: ChangeEvent<HTMLInputElement>) => void;
-  handleSearch: (s?: string) => void;
-  search: string;
-  setPage: React.Dispatch<SetStateAction<number>>;
-}
-
-const Search: React.FC<SearchProps> = ({
-  handleInputChange,
-  handleSearch,
-  search,
-  setPage,
-}) => {
-  const handleBtn = () => {
-    if (search) {
-      const searchQuery = `nameStartsWith=${search.trimEnd().toLowerCase()}`;
-      handleSearch(searchQuery);
+const Search: React.FC = () => {
+  const {
+    searchTerm,
+    setPage,
+    handleInputChange,
+    handleSearch,
+    setHeroesLimit,
+  } = useContext(Context);
+  const handleBtn = async () => {
+    if (searchTerm) {
+      const searchQuery = `nameStartsWith=${searchTerm
+        .trimEnd()
+        .toLowerCase()}`;
+      await handleSearch(searchQuery);
+      localStorage.setItem('hero', JSON.stringify(searchTerm));
       setPage(0);
+      setHeroesLimit(20);
     } else {
       handleSearch();
+      setHeroesLimit(20);
     }
   };
   return (
@@ -31,7 +32,7 @@ const Search: React.FC<SearchProps> = ({
           type="text"
           className="search__input"
           placeholder="search"
-          value={search}
+          value={searchTerm}
           onChange={handleInputChange}
         />
         <button onClick={handleBtn} className="search__btn">
