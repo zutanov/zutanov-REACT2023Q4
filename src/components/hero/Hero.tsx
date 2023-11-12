@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import './hero.scss';
 import { Link } from 'react-router-dom';
-import Context from '../provider/MarvelProvider';
+import Context from '../../context/MarvelProvider';
 
 const Hero: React.FC = () => {
   const { result, error } = useContext(Context);

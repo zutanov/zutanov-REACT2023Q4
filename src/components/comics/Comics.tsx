@@ -1,5 +1,5 @@
 import React from 'react';
-import { IComicsState } from '../comicsPage/ComicsPage';
+import { IComicsState } from '../../pages/comicsPage/ComicsPage';
 import './comics.scss';
 
 const Comics: React.FC<IComicsState> = ({ comics }) => {

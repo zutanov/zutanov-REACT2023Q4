@@ -1,7 +1,7 @@
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import './pagination.scss';
 import React, { useContext, useRef } from 'react';
-import Context from '../provider/MarvelProvider';
+import Context from '../../context/MarvelProvider';
 
 const Pagination: React.FC = () => {
   const { pageQty, limit, handleSearch, setHeroesLimit } = useContext(Context);

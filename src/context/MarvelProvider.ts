@@ -1,14 +1,14 @@
-import { IHero } from '../../App';
+import { IHero } from '../App';
 
 import { ChangeEvent, createContext } from 'react';
 
 interface IContext {
   result: IHero[];
-  loading: boolean;
+  loading?: boolean;
   pageQty: number;
-  searchTerm: string;
+  searchTerm?: string;
   limit: number;
-  error: boolean;
+  error?: boolean;
   handleSearch: (query?: string, limit?: number) => void;
   setHeroesLimit: (n: number) => void;
   handleInputChange: (e: ChangeEvent<HTMLInputElement>) => void;

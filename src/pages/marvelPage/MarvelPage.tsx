@@ -1,7 +1,7 @@
 import React from 'react';
-import Search from '../search/Search';
-import Heroes from '../heroes/Heroes';
-import Pagination from '../pagination/Pagination';
+import Search from '../../components/search/Search';
+import Heroes from '../../components/heroes/Heroes';
+import Pagination from '../../components/pagination/Pagination';
 
 const MarvelPage: React.FC = () => {
   return (

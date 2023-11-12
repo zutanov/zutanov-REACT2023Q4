@@ -1,9 +1,10 @@
 import { Route, Routes } from 'react-router-dom';
 import './App.css';
-import AllComics from './components/comicsPage/ComicsPage';
+import AllComics from './pages/comicsPage/ComicsPage';
 import Outlet from './components/outlet/Outlet';
-import Context from './components/provider/MarvelProvider';
+import Context from './context/MarvelProvider';
 import { ChangeEvent, useEffect, useState } from 'react';
+import NotFound from './pages/notFound/NotFound';
 
 export interface IPromise {
   limit: number;
@@ -45,6 +46,7 @@ function App() {
       if (data.total > 100) {
         setPageQty(Math.ceil(100 / limit));
       }
+      console.log(data);
       setResult(data.results);
       setLoading(false);
       return data;
@@ -53,14 +55,6 @@ function App() {
       throw error;
     }
   };
-
-  // const handleSearch = async (query?: string, limit?: number) => {
-  //   const { results } = await fetchData<IPromise>(query, limit);
-  //   console.log(results);
-  //   if (searchTerm && results[0].name) {
-  //     localStorage.setItem('hero', JSON.stringify(searchTerm));
-  //   }
-  // };
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>): void => {
     setSearchTerm(e.target.value);
@@ -106,6 +100,7 @@ function App() {
         <Route path="/" element={<Outlet />}>
           <Route path="comics/:id" element={<AllComics />} />
         </Route>
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </Context.Provider>
   );

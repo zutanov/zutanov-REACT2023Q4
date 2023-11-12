@@ -1,8 +1,8 @@
 import React, { useContext } from 'react';
 import './search.scss';
-import Context from '../provider/MarvelProvider';
+import Context from '../../context/MarvelProvider';
 
-const Search: React.FC = () => {
+const Search = () => {
   const {
     searchTerm,
     setPage,
@@ -33,7 +33,7 @@ const Search: React.FC = () => {
           className="search__input"
           placeholder="search"
           value={searchTerm}
-          onChange={handleInputChange}
+          onChange={(e) => handleInputChange(e)}
         />
         <button onClick={handleBtn} className="search__btn">
           Search

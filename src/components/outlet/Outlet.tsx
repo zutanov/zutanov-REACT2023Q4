@@ -1,5 +1,5 @@
 import { Outlet as OutletPage } from 'react-router-dom';
-import MarvelPage from '../marvelPage/MarvelPage';
+import MarvelPage from '../../pages/marvelPage/MarvelPage';
 
 const Outlet = () => {
   return (
