@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './heroes.scss';
 import Hero from '../hero/Hero';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
@@ -22,7 +22,10 @@ const Heroes: React.FC = () => {
   const searchValue = hero?.data?.results;
 
   const totalPage = !searchTerm ? data && data.data.total - 1240 : 0;
-  dispatch(setTotalPage(totalPage));
+
+  useEffect(() => {
+    dispatch(setTotalPage(totalPage));
+  }, [dispatch, totalPage]);
 
   const result = searchTerm ? searchValue : results;
 

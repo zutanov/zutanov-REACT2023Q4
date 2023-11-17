@@ -16,7 +16,7 @@ export const marvelApi = createApi({
   }),
   endpoints: (builder) => ({
     fetchAllHeroes: builder.query<MarvelPromise<IHero[]>, IParams>({
-      query: ({ limit = 20, offset = 1240 }) => ({
+      query: ({ limit = 21, offset = 1240 }) => ({
         url: `/characters`,
         params: {
           apikey: '745c5a5a9b5aee2d133096deaf6e1260',

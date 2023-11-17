@@ -91,9 +91,9 @@ const Pagination: React.FC = () => {
           dispatch(setLimitPerPage(e.target.value));
         }}
       >
-        <option value="20">20</option>
+        <option value="21">21</option>
         <option value="30">30</option>
-        <option value="40">40</option>
+        <option value="42">42</option>
       </select>
     </div>
   );

@@ -1,13 +1,13 @@
 .search {
-    position: sticky;
-    top: 10px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 5px 10px;
-    background: brown;
-    border: 1px solid white;
- 
+  position: sticky;
+  top: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px 10px;
+  background: brown;
+  border: 1px solid white;
+
   .logo {
     background: url('../../assets/logo.png') no-repeat center/contain;
     height: 50px;

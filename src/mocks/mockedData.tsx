@@ -1,7 +1,4 @@
 export const heroesData = {
-  count: 20,
-  limit: 20,
-  offset: 0,
   results: [
     {
       id: '1011334',
