@@ -1,42 +1,15 @@
 import './comicsPage.scss';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import Comics from '../../components/comics/Comics';
-
-export interface IComics {
-  id: string;
-  thumbnail: {
-    path: string;
-  };
-  title: string;
-}
-
-export interface IComicsState {
-  comics: IComics[];
-}
+import { useFetchComicsQuery } from '../../services/HeroesService';
+import { IComics } from '../../model/hero';
+import { Loader } from '../../components/loader/Loader';
 
 const ComicsPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const [comics, setComics] = useState<IComics[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
-
-  const getComics = async <T,>(): Promise<T> => {
-    try {
-      const response = await fetch(
-        `https://gateway.marvel.com/v1/public/characters/${id?.slice(
-          1
-        )}/comics?limit=9&apikey=745c5a5a9b5aee2d133096deaf6e1260`
-      );
-      const { data } = await response.json();
-      setLoading(false);
-      setComics(data.results);
-      return data.results;
-    } catch (e) {
-      console.log(e);
-      throw e;
-    }
-  };
+  const { isError, isLoading, data } = useFetchComicsQuery(id);
 
   const handleClose = (e: React.MouseEvent<HTMLDivElement>) => {
     if (
@@ -47,13 +20,9 @@ const ComicsPage = () => {
     }
   };
 
-  useEffect(() => {
-    try {
-      getComics<IComicsState>();
-    } catch (error) {
-      console.log(error);
-    }
-  }, []);
+  const comics = data?.data.results as IComics[];
+
+  if (isError) throw new Error('Comics error');
 
   return (
     <div className="allcomics" onClick={handleClose}>
@@ -69,13 +38,15 @@ const ComicsPage = () => {
             Back
           </Link>
         </div>
-        {loading ? (
-          <h2 className="allcomics__empty">Loading...</h2>
+        {isLoading ? (
+          <Loader />
         ) : !comics.length ? (
-          <h2 className="allcomics__empty">There is no comics!</h2>
+          <h2 className="allcomics__empty">There are no comics!</h2>
         ) : (
           <div className="allcomics__wrapper">
-            <Comics comics={comics} />
+            {comics.map((item) => (
+              <Comics key={item.id} {...item} />
+            ))}
           </div>
         )}
       </div>

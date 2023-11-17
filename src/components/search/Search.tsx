@@ -1,44 +1,44 @@
-import React, { useContext } from 'react';
 import './search.scss';
-import Context from '../../context/MarvelProvider';
+import { useAppDispatch } from '../../hooks/redux';
+import { setSearchTerm } from '../../store/reducers/heroesSlice';
+import { useInput } from '../../hooks/input';
+import { useState } from 'react';
 
 const Search = () => {
-  const {
-    searchTerm,
-    setPage,
-    handleInputChange,
-    handleSearch,
-    setHeroesLimit,
-  } = useContext(Context);
+  const { value, onChange } = useInput('');
+  const [isError, setIsError] = useState(false);
+
+  const dispatch = useAppDispatch();
   const handleBtn = async () => {
-    if (searchTerm) {
-      const searchQuery = `nameStartsWith=${searchTerm
-        .trimEnd()
-        .toLowerCase()}`;
-      await handleSearch(searchQuery);
-      localStorage.setItem('hero', JSON.stringify(searchTerm));
-      setPage(0);
-      setHeroesLimit(20);
-    } else {
-      handleSearch();
-      setHeroesLimit(20);
+    dispatch(setSearchTerm(value.trim()));
+  };
+
+  const errorThrow = () => {
+    try {
+      throw new Error('Error in search component');
+    } catch (e) {
+      setIsError(true);
+      console.log(e);
     }
   };
+
+  if (isError) throw new Error('Error!');
+
   return (
     <div className="search">
-      <div className="logo">MARVEL Heroes</div>
+      <div className="logo"></div>
       <nav className="search__nav">
         <input
           type="text"
           className="search__input"
           placeholder="search"
-          value={searchTerm}
-          onChange={(e) => handleInputChange(e)}
+          value={value}
+          onChange={(e) => onChange(e)}
         />
         <button onClick={handleBtn} className="search__btn">
           Search
         </button>
-        <button onClick={() => handleSearch('error')} className="search__btn">
+        <button onClick={errorThrow} className="search__btn">
           ErrorCall
         </button>
       </nav>

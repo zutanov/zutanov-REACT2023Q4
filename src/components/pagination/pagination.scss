@@ -9,6 +9,10 @@
     font-size: 18px;
     height: 25px;
     outline: none;
+    appearance: none;
+    & :focus {
+      outline: none;
+    }
   }
   &__wrapper {
     height: 40px;
@@ -32,5 +36,6 @@
 .active {
   font-weight: 700;
   border-radius: 50px;
-  background: gray;
+  background: white;
+  color: red;
 }

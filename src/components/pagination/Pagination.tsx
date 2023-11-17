@@ -1,14 +1,25 @@
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import './pagination.scss';
-import React, { useContext, useRef } from 'react';
-import Context from '../../context/MarvelProvider';
+import React, { useEffect, useRef } from 'react';
+import { useAppDispatch, useAppSelector } from '../../hooks/redux';
+import {
+  setLimitPerPage,
+  setOffsetPage,
+} from '../../store/reducers/heroesSlice';
 
 const Pagination: React.FC = () => {
-  const { pageQty, limit, handleSearch, setHeroesLimit } = useContext(Context);
-
+  const { limit, offset, total } = useAppSelector((state) => state.heroes);
   const page = useRef(0);
+  const pageQty = Math.ceil(total / limit);
+  const dispatch = useAppDispatch();
+
   const history = useNavigate();
   const location = useLocation();
+
+  useEffect(() => {
+    dispatch(setOffsetPage(1240));
+    page.current = 0;
+  }, [dispatch, limit]);
 
   const changeLocation = () => {
     const searchParams = new URLSearchParams(location.search);
@@ -18,35 +29,26 @@ const Pagination: React.FC = () => {
 
   const handleChange = (direction: string) => {
     if (direction === 'prev') {
+      dispatch(setOffsetPage(offset - limit));
       page.current -= limit;
     } else {
+      dispatch(setOffsetPage(offset + limit));
       page.current += limit;
     }
-    handleSearch(`offset=${page.current}`, limit);
     changeLocation();
   };
 
   const handleClick = (idx: number) => {
     page.current = idx * limit;
-    handleSearch(`offset=${page.current}`, limit);
+    dispatch(setOffsetPage(1240 + page.current));
     changeLocation();
   };
 
-  const setLimit = async (n: number) => {
-    page.current = 0;
-    setHeroesLimit(n);
-    await handleSearch('offset=0', n);
-  };
-
   const disabledBtn = () => {
-    if (limit === 5 && page.current > 90) return true;
-    if (limit === 10 && page.current > 80) return true;
-    if (limit === 15 && page.current > 100 - limit) return true;
-    if (limit === 20 && page.current > 100 - limit * 2) return true;
-    return false;
+    return page.current >= total - limit;
   };
 
-  if (pageQty === 0) return null;
+  if (total === 0) return null;
 
   return (
     <div className="pagination">
@@ -85,12 +87,13 @@ const Pagination: React.FC = () => {
       <select
         value={limit}
         className="pagination__limit"
-        onChange={(e) => setLimit(+e.target.value)}
+        onChange={(e) => {
+          dispatch(setLimitPerPage(e.target.value));
+        }}
       >
-        <option value="5">5</option>
-        <option value="10">10</option>
-        <option value="15">15</option>
         <option value="20">20</option>
+        <option value="30">30</option>
+        <option value="40">40</option>
       </select>
     </div>
   );

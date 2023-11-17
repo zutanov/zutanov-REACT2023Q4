@@ -1,4 +1,5 @@
 import { Component, ReactNode } from 'react';
+import './errorBoundary.scss';
 
 interface ErrorBoundaryProps {
   children: ReactNode;
@@ -8,25 +9,28 @@ interface ErrorBoundaryState {
 }
 
 class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
-  constructor(props: ErrorBoundaryProps) {
-    super(props);
-    this.state = {
-      error: false,
-    };
+  state = {
+    error: false,
+  };
+
+  static getDerivedStateFromError() {
+    return { error: true };
   }
 
   componentDidCatch(error: Error) {
     console.log(error);
-    this.setState({
-      error: true,
-    });
   }
 
   render() {
-    if (this.state.error) {
-      return <h1>Something Went Wrong!</h1>;
-    }
-    return this.props.children;
+    return this.state.error ? (
+      <div className="error">
+        <h1 className="error__title">
+          Something Went Wrong! Please, <br /> reload the page.
+        </h1>
+      </div>
+    ) : (
+      this.props.children
+    );
   }
 }
 
