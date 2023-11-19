@@ -1,15 +1,23 @@
 import './search.scss';
-import { useAppDispatch } from '../../hooks/redux';
-import { setSearchTerm } from '../../store/reducers/heroesSlice';
+import { useAppDispatch, useAppSelector } from '../../hooks/redux';
+import { setSearchTerm } from '../../store/reducers/searchSlice';
 import { useInput } from '../../hooks/input';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 const Search = () => {
-  const { value, onChange } = useInput('');
+  const { value, setValue, onChange } = useInput('');
   const [isError, setIsError] = useState(false);
-
   const dispatch = useAppDispatch();
+
+  const { searchTerm } = useAppSelector((state) => state.search);
+
+  useEffect(() => {
+    dispatch(setSearchTerm(localStorage.getItem('hero') || ''));
+    setValue(searchTerm);
+  }, []);
+
   const handleBtn = async () => {
+    localStorage.setItem('hero', value);
     dispatch(setSearchTerm(value.trim()));
   };
 

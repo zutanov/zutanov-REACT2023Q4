@@ -3,6 +3,7 @@ import { ChangeEvent, useState } from 'react';
 interface InputTypeReturn {
   value: string;
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  setValue: React.Dispatch<React.SetStateAction<string>>;
 }
 
 export const useInput = (search: string = ''): InputTypeReturn => {
@@ -15,5 +16,6 @@ export const useInput = (search: string = ''): InputTypeReturn => {
   return {
     value,
     onChange,
+    setValue,
   };
 };

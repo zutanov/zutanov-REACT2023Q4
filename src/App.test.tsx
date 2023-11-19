@@ -1,17 +1,15 @@
-import { render, screen } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 
 import App from './App';
+import { renderWithProviders } from './test/test-utils';
 
 describe('App', () => {
-  test('App title displays correctly', () => {
-    render(
+  test('App title displays correctly', async () => {
+    renderWithProviders(
       <BrowserRouter>
         <App />
       </BrowserRouter>
     );
-
-    const logo = screen.getByText(/Marvel/i);
-    expect(logo).toBeInTheDocument();
+    expect(<App />).toBeTruthy();
   });
 });

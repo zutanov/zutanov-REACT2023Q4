@@ -6,9 +6,11 @@ import {
 import heroesSlice from './reducers/heroesSlice';
 import { marvelApi } from '../services/HeroesService';
 import { setupListeners } from '@reduxjs/toolkit/query';
+import searchSlice from './reducers/searchSlice';
 
 const rootReducer = combineReducers({
   heroes: heroesSlice,
+  search: searchSlice,
   [marvelApi.reducerPath]: marvelApi.reducer,
 });
 

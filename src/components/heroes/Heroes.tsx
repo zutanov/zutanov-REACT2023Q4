@@ -10,14 +10,15 @@ import { setTotalPage } from '../../store/reducers/heroesSlice';
 import { Loader } from '../loader/Loader';
 
 const Heroes: React.FC = () => {
-  const { searchTerm, limit, offset } = useAppSelector((state) => state.heroes);
+  const { limit, offset } = useAppSelector((state) => state.heroes);
+  const { searchTerm } = useAppSelector((state) => state.search);
   const dispatch = useAppDispatch();
 
   const { data, isLoading, isError } = useFetchAllHeroesQuery({
     limit: Math.abs(limit),
     offset,
   });
-  const { data: hero, isLoading: loading } = useFetchHeroQuery(searchTerm);
+  const { data: hero, isLoading: loader } = useFetchHeroQuery(searchTerm);
   const results = data?.data?.results;
   const searchValue = hero?.data?.results;
 
@@ -31,7 +32,7 @@ const Heroes: React.FC = () => {
 
   return (
     <>
-      {isLoading || loading ? (
+      {isLoading || loader ? (
         <Loader />
       ) : !result || !result.length || isError ? (
         <h1 style={{ padding: '80px 50px 100px' }}>Heroes not found</h1>

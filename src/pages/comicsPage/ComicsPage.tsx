@@ -1,6 +1,6 @@
 import './comicsPage.scss';
 import React from 'react';
-import { useParams, Link, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import Comics from '../../components/comics/Comics';
 import { useFetchComicsQuery } from '../../services/HeroesService';
 import { IComics } from '../../model/hero';
@@ -10,13 +10,15 @@ const ComicsPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const { isError, isLoading, data } = useFetchComicsQuery(id);
-
-  const handleClose = (e: React.MouseEvent<HTMLDivElement>) => {
+  const handleClose = (
+    e: React.MouseEvent<HTMLDivElement | HTMLButtonElement>
+  ) => {
     if (
-      e.target instanceof HTMLDivElement &&
-      e.target.className === 'allcomics'
+      (e.target instanceof HTMLDivElement &&
+        e.target.className === 'allcomics') ||
+      e.target instanceof HTMLButtonElement
     ) {
-      navigate(-1);
+      navigate('..');
     }
   };
 
@@ -34,9 +36,9 @@ const ComicsPage = () => {
       >
         <div className="allcomics__header">
           <h1>List of Comics</h1>
-          <Link to="/" className="allcomics__btn">
+          <button onClick={handleClose} className="allcomics__btn">
             Back
-          </Link>
+          </button>
         </div>
         {isLoading ? (
           <Loader />

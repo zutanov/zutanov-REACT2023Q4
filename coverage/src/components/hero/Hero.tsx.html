@@ -23,16 +23,16 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">93.1% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>27/29</span>
+                <span class='fraction'>31/31</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">66.66% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>2/3</span>
+                <span class='fraction'>1/1</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">93.1% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>27/29</span>
+                <span class='fraction'>31/31</span>
             </div>
         
             
@@ -92,60 +92,66 @@
 <a name='L27'></a><a href='#L27'>27</a>
 <a name='L28'></a><a href='#L28'>28</a>
 <a name='L29'></a><a href='#L29'>29</a>
-<a name='L30'></a><a href='#L30'>30</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<a name='L30'></a><a href='#L30'>30</a>
+<a name='L31'></a><a href='#L31'>31</a>
+<a name='L32'></a><a href='#L32'>32</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">21x</span>
-<span class="cline-any cline-yes">21x</span>
-<span class="cline-any cline-yes">21x</span>
-<span class="cline-any cline-yes">21x</span>
-<span class="cline-any cline-yes">21x</span>
-<span class="cline-any cline-yes">21x</span>
-<span class="cline-any cline-yes">21x</span>
-<span class="cline-any cline-yes">21x</span>
-<span class="cline-any cline-yes">21x</span>
-<span class="cline-any cline-yes">21x</span>
-<span class="cline-any cline-yes">21x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import React, { useContext } from 'react';
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">23x</span>
+<span class="cline-any cline-yes">23x</span>
+<span class="cline-any cline-yes">23x</span>
+<span class="cline-any cline-yes">23x</span>
+<span class="cline-any cline-yes">23x</span>
+<span class="cline-any cline-yes">23x</span>
+<span class="cline-any cline-yes">23x</span>
+<span class="cline-any cline-yes">23x</span>
+<span class="cline-any cline-yes">23x</span>
+<span class="cline-any cline-yes">23x</span>
+<span class="cline-any cline-yes">23x</span>
+<span class="cline-any cline-yes">23x</span>
+<span class="cline-any cline-yes">23x</span>
+<span class="cline-any cline-yes">23x</span>
+<span class="cline-any cline-yes">23x</span>
+<span class="cline-any cline-yes">23x</span>
+<span class="cline-any cline-yes">23x</span>
+<span class="cline-any cline-yes">23x</span>
+<span class="cline-any cline-yes">23x</span>
+<span class="cline-any cline-yes">23x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import React from 'react';
 import './hero.scss';
 import { Link } from 'react-router-dom';
-import Context from '../../context/MarvelProvider';
+import { IHero } from '../../model/hero';
 &nbsp;
-const Hero: React.FC = () =&gt; {
-  const { result, error } = useContext(Context);
-  if (!result || error) <span class="branch-0 cbranch-no" title="branch not covered" >{</span>
-<span class="cstat-no" title="statement not covered" >    throw new Error('Data is not found');</span>
-<span class="cstat-no" title="statement not covered" >  }</span>
+interface IHeroProps extends IHero {
+  key: string;
+}
+&nbsp;
+const Hero: React.FC&lt;IHeroProps&gt; = ({ id, name, thumbnail }) =&gt; {
   return (
     &lt;&gt;
-      {result.map(({ id, name, thumbnail }) =&gt; {
-        return (
-          &lt;div className="hero" key={id}&gt;
-            &lt;div className="hero__wrapper"&gt;
-              &lt;img src={thumbnail.path + '/portrait_xlarge.jpg'} alt={name} /&gt;
-            &lt;/div&gt;
-            &lt;div className="hero__wrapper"&gt;
-              &lt;h4 className="hero__title"&gt;{name}&lt;/h4&gt;
-              &lt;Link to={`comics/:${id}`}&gt;Show comics&lt;/Link&gt;
-            &lt;/div&gt;
-          &lt;/div&gt;
-        );
-      })}
+      &lt;div className="hero" key={id}&gt;
+        &lt;div className="hero__wrapper"&gt;
+          &lt;img
+            className="hero__image"
+            src={thumbnail.path + '/portrait_xlarge.jpg'}
+            alt={name}
+          /&gt;
+        &lt;/div&gt;
+        &lt;div className="hero__wrapper"&gt;
+          &lt;h4 className="hero__title"&gt;{name}&lt;/h4&gt;
+          &lt;Link className="hero__link" to={`/comics/:${id}`}&gt;
+            Show comics
+          &lt;/Link&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
     &lt;/&gt;
   );
 };
@@ -157,7 +163,7 @@ export default Hero;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2023-11-12T17:34:43.872Z
+                at 2023-11-19T17:06:08.430Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>

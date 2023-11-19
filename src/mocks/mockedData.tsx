@@ -144,26 +144,36 @@ export const heroesData = {
   total: 1563,
 };
 
-export const comicsData = [
-  {
-    id: '22506',
-    thumbnail: {
-      path: 'http://i.annihil.us/u/prod/marvel/i/mg/d/03/58dd080719806',
-    },
-    title: 'Avengers: The Initiative (2007) #19',
+export const heroData = {
+  id: '1011334',
+  name: '3-D Man',
+  thumbnail: {
+    path: 'http://i.annihil.us/u/prod/marvel/i/mg/c/e0/535fecbbb9784',
   },
-  {
-    id: '22300',
-    thumbnail: {
-      path: 'http://i.annihil.us/u/prod/marvel/i/mg/1/10/4e94a23255996',
+};
+
+export const comicsData = {
+  results: [
+    {
+      id: '22506',
+      thumbnail: {
+        path: 'http://i.annihil.us/u/prod/marvel/i/mg/d/03/58dd080719806',
+      },
+      title: 'Avengers: The Initiative (2007) #19',
     },
-    title: 'Avengers: The Initiative (2007) #18 (ZOMBIE VARIANT)',
-  },
-  {
-    id: '22299',
-    thumbnail: {
-      path: 'http://i.annihil.us/u/prod/marvel/i/mg/6/20/58dd057d304d1',
+    {
+      id: '22300',
+      thumbnail: {
+        path: 'http://i.annihil.us/u/prod/marvel/i/mg/1/10/4e94a23255996',
+      },
+      title: 'Avengers: The Initiative (2007) #18 (ZOMBIE VARIANT)',
     },
-    title: 'Avengers: The Initiative (2007) #18',
-  },
-];
+    {
+      id: '22299',
+      thumbnail: {
+        path: 'http://i.annihil.us/u/prod/marvel/i/mg/6/20/58dd057d304d1',
+      },
+      title: 'Avengers: The Initiative (2007) #18',
+    },
+  ],
+};

@@ -20,7 +20,7 @@ const Hero: React.FC<IHeroProps> = ({ id, name, thumbnail }) => {
         </div>
         <div className="hero__wrapper">
           <h4 className="hero__title">{name}</h4>
-          <Link className="hero__link" to={`comics/:${id}`}>
+          <Link className="hero__link" to={`/comics/:${id}`}>
             Show comics
           </Link>
         </div>

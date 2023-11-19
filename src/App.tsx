@@ -9,7 +9,7 @@ function App() {
       <div className="container">
         <Routes>
           <Route path="/" element={<Outlet />}>
-            <Route path="comics/:id" element={<AllComics />} />
+            <Route path="/comics/:id" element={<AllComics />} />
           </Route>
           <Route path="*" element={<NotFound />} />
         </Routes>
