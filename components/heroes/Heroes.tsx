@@ -14,10 +14,11 @@ const Heroes: React.FC = () => {
   const { searchTerm } = useAppSelector((state) => state.search);
   const dispatch = useAppDispatch();
 
-  const { data, isLoading, isError } = useFetchAllHeroesQuery({
+  const { isLoading, isError, data } = useFetchAllHeroesQuery({
     limit: Math.abs(limit),
     offset,
   });
+
   const { data: hero, isLoading: loader } = useFetchHeroQuery(searchTerm);
   const results = data?.data?.results;
   const searchValue = hero?.data?.results;

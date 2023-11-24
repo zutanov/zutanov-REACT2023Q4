@@ -24,9 +24,20 @@ class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
   render() {
     return this.state.error ? (
       <div className={styles.error}>
-        <h1 className={styles.error__title}>
-          Something Went Wrong! Please, <br /> reload the page.
-        </h1>
+        <div className={styles.error__left}></div>
+        <div className={styles.error__right}>
+          <h1 className={styles.error__title}>
+            Something Went Wrong! <br />
+            Please, reload the page.
+          </h1>
+          <button
+            type="button"
+            className={styles.error__btn}
+            onClick={() => this.setState({ error: false })}
+          >
+            Try again?
+          </button>
+        </div>
       </div>
     ) : (
       this.props.children

@@ -22,7 +22,7 @@ const ComicsPage = () => {
         e.target.className === styles.allcomics) ||
       e.target instanceof HTMLButtonElement
     ) {
-      router.push('..');
+      router.push('/');
     }
   };
 

@@ -2,15 +2,26 @@
   position: absolute;
   top: 0;
   left: 0;
-  background: url('../public/assets/error_bg.jpg') no-repeat;
   height: 100%;
   width: 100%;
-  align-items: center;
-  justify-content: flex-end;
-  display: flex;
-
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  &__left {
+    background: url('../public/assets/error_bg.jpg') no-repeat;
+  }
+  &__right {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
   &__title {
     color: red;
     padding-right: 100px;
+  }
+  &__btn {
+    width: 100px;
+    font-weight: 700;
+    height: 50px;
   }
 }

@@ -56,4 +56,7 @@ export const {
   useFetchAllHeroesQuery,
   useFetchHeroQuery,
   useFetchComicsQuery,
+  util: { getRunningQueriesThunk },
 } = marvelApi;
+
+export const { fetchAllHeroes, fetchHero, fetchComics } = marvelApi.endpoints;

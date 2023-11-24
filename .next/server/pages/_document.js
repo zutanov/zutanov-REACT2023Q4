@@ -1,56 +1,6 @@
-"use strict";
-/*
- * ATTENTION: An "eval-source-map" devtool has been used.
- * This devtool is neither made for production nor for readable output files.
- * It uses "eval()" calls to create a separate source file with attached SourceMaps in the browser devtools.
- * If you are trying to read the output file, select a different devtool (https://webpack.js.org/configuration/devtool/)
- * or disable the default devtool with "devtool: false".
- * If you are looking for production-ready output files, see mode: "production" (https://webpack.js.org/configuration/mode/).
- */
-(() => {
-var exports = {};
-exports.id = "pages/_document";
-exports.ids = ["pages/_document"];
-exports.modules = {
-
-/***/ "next/dist/compiled/next-server/pages.runtime.dev.js":
-/*!**********************************************************************!*\
-  !*** external "next/dist/compiled/next-server/pages.runtime.dev.js" ***!
-  \**********************************************************************/
-/***/ ((module) => {
-
-module.exports = require("next/dist/compiled/next-server/pages.runtime.dev.js");
-
-/***/ }),
-
-/***/ "react":
-/*!************************!*\
-  !*** external "react" ***!
-  \************************/
-/***/ ((module) => {
-
-module.exports = require("react");
-
-/***/ }),
-
-/***/ "path":
-/*!***********************!*\
-  !*** external "path" ***!
-  \***********************/
-/***/ ((module) => {
-
-module.exports = require("path");
-
-/***/ })
-
-};
-;
-
-// load runtime
-var __webpack_require__ = require("../webpack-runtime.js");
-__webpack_require__.C(exports);
-var __webpack_exec__ = (moduleId) => (__webpack_require__(__webpack_require__.s = moduleId))
-var __webpack_exports__ = __webpack_require__.X(0, ["vendor-chunks/next","vendor-chunks/@swc"], () => (__webpack_exec__("./node_modules/next/dist/pages/_document.js")));
-module.exports = __webpack_exports__;
-
-})();
+const CHUNK_PUBLIC_PATH = "server/pages/_document.js";
+const runtime = require("../chunks/[turbopack]_runtime.js");
+runtime.loadChunk("server/chunks/node_modules_b9e39a._.js");
+runtime.loadChunk("server/chunks/[root of the server]__101d2f._.js");
+runtime.loadChunk("server/chunks/styles_dd1a6b._.css");
+module.exports = runtime.getOrInstantiateRuntimeModule("[project]/node_modules/next/dist/esm/build/templates/pages.js/(INNER_PAGE)/[next]/entry/pages/_document.tsx [ssr] (ecmascript) (ecmascript)", CHUNK_PUBLIC_PATH).exports;
