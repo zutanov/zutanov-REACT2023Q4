@@ -5,6 +5,11 @@ import { useFetchComicsQuery } from '../../../services/HeroesService';
 import { IComics } from '../../../model/hero';
 import { Loader } from '../../../components/loader/Loader';
 import { useRouter } from 'next/router';
+import {
+  getRunningQueriesThunk,
+  fetchComics,
+} from '../../../services/HeroesService';
+import { wrapper } from '../../../store/store';
 
 const ComicsPage = () => {
   const router = useRouter();
@@ -61,3 +66,18 @@ const ComicsPage = () => {
 };
 
 export default ComicsPage;
+
+export const getServerSideProps = wrapper.getServerSideProps(
+  (store) => async (context) => {
+    const id = context?.params?.id;
+
+    const response = await store.dispatch(
+      fetchComics.initiate(id?.slice(1) as string)
+    );
+    await Promise.all(store.dispatch(getRunningQueriesThunk()));
+    console.log(response + 'res');
+    return {
+      props: {},
+    };
+  }
+);

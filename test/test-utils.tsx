@@ -3,7 +3,7 @@ import { render } from '@testing-library/react';
 import type { RenderOptions } from '@testing-library/react';
 import type { PreloadedState } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
-import { setupStore } from '../store/store';
+import { makeStore } from '../store/store';
 import type { AppStore, RootState } from '../store/store';
 
 interface ExtendedRenderOptions extends Omit<RenderOptions, 'queries'> {
@@ -15,7 +15,7 @@ export function renderWithProviders(
   ui: React.ReactElement,
   {
     preloadedState = {},
-    store = setupStore(preloadedState),
+    store = makeStore(preloadedState),
     ...renderOptions
   }: ExtendedRenderOptions = {}
 ) {

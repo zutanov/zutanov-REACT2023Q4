@@ -28,9 +28,6 @@ const Pagination: React.FC = () => {
       pathname: history.pathname,
       query: { ...query, offset: offset },
     });
-    // const searchParams = new URLSearchParams(location.search);
-    // searchParams.set('offset', String(page.current / limit + 1));
-    // history.push(`?${searchParams.toString()}`);
   };
 
   const handleChange = (direction: string) => {
@@ -69,7 +66,7 @@ const Pagination: React.FC = () => {
         <div className={styles.pagination__pages}>
           {Array.from({ length: pageQty }, (_, idx) => (
             <Link
-              href="/"
+              href={`/?offset=${idx + 1}`}
               className={`${
                 page.current / limit === idx
                   ? `${styles.pagination__page} ${styles.active}`

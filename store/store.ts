@@ -32,5 +32,5 @@ export type AppDispatch = AppStore['dispatch'];
 
 setupListeners(makeStore().dispatch);
 
-const setupStore = (context: Context) => store;
+export const setupStore = (context: Context) => store;
 export const wrapper = createWrapper<AppStore>(setupStore, { debug: true });

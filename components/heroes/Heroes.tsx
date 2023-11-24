@@ -2,10 +2,7 @@ import React, { useEffect } from 'react';
 import styles from '../../styles/heroes.module.scss';
 import Hero from '../hero/Hero';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
-import {
-  useFetchAllHeroesQuery,
-  useFetchHeroQuery,
-} from '../../services/HeroesService';
+import { useFetchAllHeroesQuery } from '../../services/HeroesService';
 import { setTotalPage } from '../../store/reducers/heroesSlice';
 import { Loader } from '../loader/Loader';
 
@@ -17,11 +14,10 @@ const Heroes: React.FC = () => {
   const { isLoading, isError, data } = useFetchAllHeroesQuery({
     limit: Math.abs(limit),
     offset,
+    search: searchTerm,
   });
 
-  const { data: hero, isLoading: loader } = useFetchHeroQuery(searchTerm);
-  const results = data?.data?.results;
-  const searchValue = hero?.data?.results;
+  const result = data?.data?.results;
 
   const totalPage = !searchTerm ? data && data.data.total - 1240 : 0;
 
@@ -29,11 +25,9 @@ const Heroes: React.FC = () => {
     dispatch(setTotalPage(totalPage));
   }, [dispatch, totalPage]);
 
-  const result = searchTerm ? searchValue : results;
-
   return (
     <>
-      {isLoading || loader ? (
+      {isLoading ? (
         <Loader />
       ) : !result || !result.length || isError ? (
         <h1 style={{ padding: '80px 50px 100px' }}>Heroes not found</h1>
