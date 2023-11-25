@@ -2,16 +2,11 @@ import { screen, waitFor } from '@testing-library/react';
 import { describe } from 'vitest';
 import Search from './Search';
 import userEvent from '@testing-library/user-event';
-import { BrowserRouter } from 'react-router-dom';
 import { renderWithProviders } from '../../test/test-utils';
 
 describe('Search Component', () => {
   it('saves entered value to local storage on button click', async () => {
-    renderWithProviders(
-      <BrowserRouter>
-        <Search />
-      </BrowserRouter>
-    );
+    renderWithProviders(<Search />);
 
     const set = vi.spyOn(Object.getPrototypeOf(localStorage), 'setItem');
     const search = await screen.findByText('Search');
@@ -24,18 +19,13 @@ describe('Search Component', () => {
       mocked
     );
 
-    renderWithProviders(
-      <BrowserRouter>
-        <Search />
-      </BrowserRouter>,
-      {
-        preloadedState: {
-          search: {
-            searchTerm: localStorage.getItem('hero') || '',
-          },
+    renderWithProviders(<Search />, {
+      preloadedState: {
+        search: {
+          searchTerm: localStorage.getItem('hero') || '',
         },
-      }
-    );
+      },
+    });
     const search = screen.getByRole('textbox');
     await waitFor(() => {
       expect(search).toHaveAttribute('value', mocked);

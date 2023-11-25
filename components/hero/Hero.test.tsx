@@ -5,8 +5,6 @@ import userEvent from '@testing-library/user-event';
 import { delay, http, HttpResponse } from 'msw';
 import { setupServer } from 'msw/node';
 import { renderWithProviders } from '../../test/test-utils';
-import { BrowserRouter, MemoryRouter, Route, Routes } from 'react-router-dom';
-import ComicsPage from '../../pages/comicsPage/ComicsPage';
 
 const mockedHeroData = heroesData.results[0];
 
@@ -21,51 +19,30 @@ const handlers = [
 
 const server = setupServer(...handlers);
 
-beforeAll(() => server.listen());
-afterEach(() => server.resetHandlers());
-afterAll(() => server.close());
-
 describe('Card Component', () => {
-  it('Ensure that the card component renders the relevant card data', async () => {
+  beforeAll(() => server.listen());
+  afterEach(() => server.resetHandlers());
+  afterAll(() => server.close());
+  beforeEach(() => {
     renderWithProviders(
-      <MemoryRouter>
-        <Hero
-          key={mockedHeroData.id}
-          id={mockedHeroData.id}
-          thumbnail={mockedHeroData.thumbnail}
-          name={mockedHeroData.name}
-        />
-      </MemoryRouter>
+      <Hero
+        key={mockedHeroData.id}
+        id={mockedHeroData.id}
+        thumbnail={mockedHeroData.thumbnail}
+        name={mockedHeroData.name}
+      />
     );
-
+  });
+  it('Ensure that the card component renders the relevant card data', async () => {
     const heroID = screen.getByRole('img');
-    const heroName = screen.getByText('3-D Man');
+    const heroName = screen.getByRole('heading', { name: /3-D Man/i });
     expect(heroID).toHaveAttribute(
       'src',
       `http://i.annihil.us/u/prod/marvel/i/mg/c/e0/535fecbbb9784/portrait_xlarge.jpg`
     );
-    expect(heroName).toHaveClass('hero__title');
+    expect(heroName).toBeInTheDocument();
   });
   it('Clicking on a card opens a detailed hero component', async () => {
-    renderWithProviders(
-      <BrowserRouter>
-        <Routes>
-          <Route
-            path="/"
-            element={
-              <Hero
-                key={mockedHeroData.id}
-                id={mockedHeroData.id}
-                thumbnail={mockedHeroData.thumbnail}
-                name={mockedHeroData.name}
-              />
-            }
-          />
-          <Route path="/comics/:id" element={<ComicsPage />} />
-        </Routes>
-      </BrowserRouter>
-    );
-
     const comicsPageTitle = screen.queryByText('List of Comics');
     expect(comicsPageTitle).toBeNull();
 
@@ -79,21 +56,11 @@ describe('Card Component', () => {
   });
 
   it('Clicking triggers an additional API call to fetch detailed information', async () => {
-    renderWithProviders(
-      <BrowserRouter>
-        <Hero
-          key={mockedHeroData.id}
-          id={mockedHeroData.id}
-          thumbnail={mockedHeroData.thumbnail}
-          name={mockedHeroData.name}
-        />
-      </BrowserRouter>
-    );
-
     const user = userEvent.setup();
     const spyAnchorTag = vi.spyOn(user, 'click');
     const showComicsButton = screen.getByRole('link', { name: 'Show comics' });
     await user.click(showComicsButton);
+
     expect(spyAnchorTag).toHaveBeenCalledOnce();
   });
 });

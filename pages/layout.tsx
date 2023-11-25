@@ -6,15 +6,15 @@ import ErrorBoundary from '../components/errorBoundary/ErrorBoundary';
 export default function MainLayout({
   children,
 }: {
-  children: React.ReactNode;
+  children?: React.ReactNode;
 }) {
   return (
     <ErrorBoundary>
       <div id="root">
         <div className="container">
           <Search />
-          <Heroes />
           {children}
+          <Heroes />
           <Pagination />
         </div>
         <div className="container__img"></div>

@@ -1,40 +1,13 @@
-import { screen, waitFor, render } from '@testing-library/react';
-import Pagination from './Pagination';
-import { heroesData } from '../../mocks/mockedData';
-import { delay, http, HttpResponse } from 'msw';
-import { setupServer } from 'msw/node';
-import { MemoryRouter } from 'react-router-dom';
-import { Provider } from 'react-redux';
-import { setupStore } from '../../store/store';
-import Heroes from '../../components/heroes/Heroes';
+import { screen, waitFor, render, fireEvent } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-
-const store = setupStore();
-const handlers = [
-  http.get('https://gateway.marvel.com/v1/public/characters', async () => {
-    await delay(150);
-    return HttpResponse.json({
-      data: heroesData,
-    });
-  }),
-];
-
-const server = setupServer(...handlers);
-
-beforeAll(() => server.listen());
-afterEach(() => server.resetHandlers());
-afterAll(() => server.close());
+import { renderWithProviders } from '../../test/test-utils';
+import MainLayout from '../../pages/layout';
 
 describe('Pagination Component', () => {
+  vi.mock('next/router', () => require('next-router-mock'));
+
   it('Updates URL query parameter when page changes', async () => {
-    render(
-      <Provider store={store}>
-        <MemoryRouter>
-          <Heroes />
-          <Pagination />
-        </MemoryRouter>
-      </Provider>
-    );
+    renderWithProviders(<MainLayout />);
     const user = userEvent.setup();
     const spyAnchorTag = vi.spyOn(user, 'click');
     const searchButton = screen.getByRole('button', { name: /Next/i });

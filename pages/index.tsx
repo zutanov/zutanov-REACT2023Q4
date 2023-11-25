@@ -20,7 +20,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
 );
 
 const Index = () => {
-  return;
+  return <div></div>;
 };
 
 export default Index;

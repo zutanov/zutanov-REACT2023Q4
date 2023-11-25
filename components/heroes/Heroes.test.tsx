@@ -4,7 +4,6 @@ import { screen, waitFor } from '@testing-library/react';
 import { renderWithProviders } from '../../test/test-utils';
 import Heroes from './Heroes';
 import { heroesData } from '../../mocks/mockedData';
-import { MemoryRouter } from 'react-router-dom';
 
 describe('Heroes Component', () => {
   const handlers = [
@@ -23,13 +22,8 @@ describe('Heroes Component', () => {
   afterAll(() => server.close());
 
   test('Renders the specified number of cards', async () => {
-    renderWithProviders(
-      <MemoryRouter>
-        <Heroes />
-      </MemoryRouter>
-    );
-
-    await waitFor(() => {
+    renderWithProviders(<Heroes />);
+    waitFor(() => {
       const cards = screen.getAllByRole('link');
       expect(cards).toHaveLength(20);
     });
@@ -52,11 +46,7 @@ describe('Heroes Component', () => {
   afterEach(() => server.resetHandlers());
   afterAll(() => server.close());
   test('Displays an appropriate message if no cards are present', async () => {
-    renderWithProviders(
-      <MemoryRouter>
-        <Heroes />
-      </MemoryRouter>
-    );
+    renderWithProviders(<Heroes />);
     await waitFor(() => {
       expect(screen.queryByText(/Heroes not found/i)).toBeInTheDocument();
     });

@@ -1,11 +1,11 @@
 import styles from '../../../styles/comics.module.scss';
 import React from 'react';
 import Comics from '../../../components/comics/Comics';
-import { useFetchComicsQuery } from '../../../services/HeroesService';
 import { IComics } from '../../../model/hero';
 import { Loader } from '../../../components/loader/Loader';
 import { useRouter } from 'next/router';
 import {
+  useFetchComicsQuery,
   getRunningQueriesThunk,
   fetchComics,
 } from '../../../services/HeroesService';

@@ -24,11 +24,26 @@ const Pagination: React.FC = () => {
   const changeLocation = () => {
     const { query } = history;
     const offset = String(page.current / limit + 1);
-    history.push({
+    const url = {
       pathname: history.pathname,
       query: { ...query, offset: offset },
-    });
+    };
+    const newUrl = new URL(window.location.href);
+    newUrl.search = new URLSearchParams(url.query).toString();
+    window.history.replaceState({}, '', newUrl.href);
   };
+
+  useEffect(() => {
+    const { query } = history;
+    const offset = String(page.current / limit + 1);
+    const url = {
+      pathname: history.pathname,
+      query: { ...query, offset: offset },
+    };
+    const newUrl = new URL(window.location.href);
+    newUrl.search = new URLSearchParams(url.query).toString();
+    window.history.replaceState({}, '', newUrl.href);
+  }, [history, limit, offset, page]);
 
   const handleChange = (direction: string) => {
     if (direction === 'prev') {
@@ -38,13 +53,13 @@ const Pagination: React.FC = () => {
       dispatch(setOffsetPage(offset + limit));
       page.current += limit;
     }
-    changeLocation();
+    // changeLocation();
   };
 
   const handleClick = (idx: number) => {
     page.current = idx * limit;
     dispatch(setOffsetPage(1240 + page.current));
-    changeLocation();
+    // changeLocation();
   };
 
   const disabledBtn = () => {
