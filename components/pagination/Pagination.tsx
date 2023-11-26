@@ -21,18 +21,6 @@ const Pagination: React.FC = () => {
     page.current = 0;
   }, [dispatch, limit]);
 
-  const changeLocation = () => {
-    const { query } = history;
-    const offset = String(page.current / limit + 1);
-    const url = {
-      pathname: history.pathname,
-      query: { ...query, offset: offset },
-    };
-    const newUrl = new URL(window.location.href);
-    newUrl.search = new URLSearchParams(url.query).toString();
-    window.history.replaceState({}, '', newUrl.href);
-  };
-
   useEffect(() => {
     const { query } = history;
     const offset = String(page.current / limit + 1);
@@ -53,13 +41,11 @@ const Pagination: React.FC = () => {
       dispatch(setOffsetPage(offset + limit));
       page.current += limit;
     }
-    // changeLocation();
   };
 
   const handleClick = (idx: number) => {
     page.current = idx * limit;
     dispatch(setOffsetPage(1240 + page.current));
-    // changeLocation();
   };
 
   const disabledBtn = () => {

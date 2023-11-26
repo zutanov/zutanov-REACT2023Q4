@@ -1,9 +1,6 @@
 import React from 'react';
-import { act, render, screen, waitFor } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import NotFound from './404';
-import { useRouter } from 'next/router';
-import { vi } from 'vitest';
-import Search from '../components/search/Search';
 import { renderWithProviders } from '../test/test-utils';
 import MainLayout from './layout';
 import { RouterContext } from 'next/dist/shared/lib/router-context.shared-runtime';

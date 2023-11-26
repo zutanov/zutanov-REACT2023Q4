@@ -4,12 +4,8 @@ import { http, delay, HttpResponse } from 'msw';
 import { comicsData } from '../../../mocks/mockedData';
 import { setupServer } from 'msw/node';
 import { renderWithProviders } from '../../../test/test-utils';
-import { useRouter } from 'next/router';
-import { vi } from 'vitest';
 import { RouterContext } from 'next/dist/shared/lib/router-context.shared-runtime';
 import { createMockRouter } from '../../../test/createMockRouter';
-import userEvent from '@testing-library/user-event';
-import MainLayout from '../../layout';
 
 const handlers = [
   http.get(
@@ -26,16 +22,6 @@ const handlers = [
 const server = setupServer(...handlers);
 
 describe('Comics Component', () => {
-  // vi.mock('next/router', () => ({
-  //   ...(vi.importActual('next/router') as object),
-  //   useRouter: vi.fn(),
-  // }));
-
-  // (useRouter as vi.Mock).mockReturnValue({
-  //   pathName: '/comics/',
-  //   query: { id: '1011034' },
-  // });
-
   beforeEach(() => {
     renderWithProviders(
       <RouterContext.Provider
@@ -62,20 +48,14 @@ describe('Comics Component', () => {
 
   it('close Comics page by click the button', async () => {
     const closeButton = screen.getByText('Back');
-
     await waitFor(() => {
       if (closeButton) {
         fireEvent.click(closeButton);
       }
     });
-
-    await waitFor(() => {
+    waitFor(() => {
       expect(closeButton).toBeNull();
     });
-
-    // await waitFor(() => {
-    //   expect(screen.queryByText('List of Comics')).toBeNull();
-    // });
   });
 
   it('The detailed card component correctly displays the detailed card data', async () => {

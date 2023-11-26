@@ -33,6 +33,7 @@ describe('Card Component', () => {
       />
     );
   });
+
   it('Ensure that the card component renders the relevant card data', async () => {
     const heroID = screen.getByRole('img');
     const heroName = screen.getByRole('heading', { name: /3-D Man/i });
@@ -42,6 +43,7 @@ describe('Card Component', () => {
     );
     expect(heroName).toBeInTheDocument();
   });
+
   it('Clicking on a card opens a detailed hero component', async () => {
     const comicsPageTitle = screen.queryByText('List of Comics');
     expect(comicsPageTitle).toBeNull();

@@ -13,6 +13,7 @@ describe('Search Component', () => {
     await userEvent.click(search);
     expect(set).toBeCalled();
   });
+
   it('retrieves the value from local storage upon mounting', async () => {
     const mocked = 'venom';
     vi.spyOn(Object.getPrototypeOf(localStorage), 'getItem').mockReturnValue(
