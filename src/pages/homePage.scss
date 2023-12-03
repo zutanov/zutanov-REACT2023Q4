@@ -1,0 +1,15 @@
+.home {
+    &__wrapper {
+        display: grid;
+        grid-template-columns: 1fr 3fr 3fr;
+    }
+    &__desc {
+        &-title:first-child {
+            height: 250px;
+            margin: 0;
+        }
+        &-image {
+            height: 250px;
+        }
+    }
+}
