@@ -1,0 +1,35 @@
+.inp {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 40px;
+  input {
+    box-sizing: border-box;
+    font-size: 16px;
+    padding: 0 10px;
+    outline: none;
+    border-radius: 10px;
+    border: 2px solid grey;
+    height: 45px;
+    &:focus {
+      border: 2px solid black;
+    }
+  }
+  &__label {
+    position: absolute;
+    top: -11px;
+    left: 12px;
+    background: white;
+    padding: 0 5px;
+  }
+  &__error {
+    text-align: right;
+    height: 42px;
+    width: 315px;
+    bottom: -40px;
+    left: 136px;
+    position: absolute;
+    margin: 0;
+    color: palevioletred;
+  }
+}

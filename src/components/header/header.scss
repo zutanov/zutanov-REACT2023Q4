@@ -1,0 +1,19 @@
+.header {
+  border: 2px solid white;
+  height: 40px;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  margin-bottom: 40px;
+}
+
+.nav {
+  &__form {
+    &:not(:last-child) {
+      margin-right: 20px;
+    }
+  }
+  .active {
+    color: #535bf2;
+  }
+}

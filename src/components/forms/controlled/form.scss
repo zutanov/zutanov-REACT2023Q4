@@ -1,0 +1,74 @@
+.form {
+  font-size: 14px;
+  width: 450px;
+  display: flex;
+  flex-direction: column;
+  &__wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+  }
+  &__error {
+    color: red;
+    text-align: right;
+    position: absolute;
+    top: 27px;
+    right: 0;
+  }
+  &-input {
+    position: relative;
+    height: 80px;
+    &__title {
+      display: inline-block;
+      width: 80px;
+    }
+    &__list {
+      border: 1px solid gray;
+      z-index: 2;
+      position: absolute;
+      width: 100%;
+      height: auto;
+      max-height: 150px;
+      overflow: auto;
+      background: white;
+      padding: 0;
+      color: black;
+      list-style: none;
+    }
+    &__item {
+      padding: 2px;
+      &:hover {
+        background: rgb(180, 180, 180);
+        cursor: pointer;
+        transition: 0.3 all;
+      }
+    }
+    #country {
+      height: 33px;
+      padding-left: 5px;
+      border-radius: 10px;
+      margin-left: 10px;
+    }
+  }
+  select {
+    width: 100px;
+    height: 40px;
+    padding-left: 5px;
+    border-radius: 10px;
+    margin-left: 10px;
+  }
+
+  &__btn {
+    font-size: 16px;
+    height: 40px;
+    width: 100%;
+    border-radius: 5px;
+    background: #535bf2;
+    color: white;
+    cursor: pointer;
+    &:disabled {
+      background: gray;
+    }
+  }
+}
+
